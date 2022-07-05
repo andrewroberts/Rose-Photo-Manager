@@ -77,7 +77,7 @@ var ALBUMS_URL_ = BASE_URL_ + 'albums'
 
 var BACKUP_LIST_NAME_ = 'PhotosManager_BackupList'
 
-const MAX_FILE_SIZE_ = 50000
+const MAX_FILE_SIZE_ = 50000000
 
 
 

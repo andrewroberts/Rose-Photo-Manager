@@ -11,7 +11,7 @@
 // Manage the ID list of media already backed up
 
 function test_BackupList() {
-//  BackupList_.reset()
+  BackupList_.reset()
   BackupList_.dump()
 
 //  var backupList = BackupList_.get()
@@ -25,7 +25,6 @@ function test_BackupList() {
 var BackupList_ = (function(ns) {
 
   ns.dump = function() {
-    initPhotosManager_()  
     var backupList = PropertiesService
       .getUserProperties()
       .getProperty(BACKUP_LIST_NAME_)

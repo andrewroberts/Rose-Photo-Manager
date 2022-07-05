@@ -26,7 +26,7 @@ const Photos_ = (function(ns) {
    * 
    */
 
-  ns.processMedia = function({doCopy = true}) {
+  ns.processMedia = function(doCopy = true) {
 
     initPhotosManager_()
     log_('START: Looking for media not in an album')
@@ -56,15 +56,25 @@ const Photos_ = (function(ns) {
     function checkForDuplicates() {
       log_('Checking for media that is not in both lists')
       log_('Media in an album: ' + Object.keys(mediaInAlbums).length)
-      log_('Media not in an album: ' + Object.keys(allMedia).length)
-      var folder = DriveApp.getFolderById(Settings_.rootFolder)
+      log_('All media: ' + Object.keys(allMedia).length)
+      var folder = getBackupFolder()
+      let backupList = BackupList_.get()
       for (var id in allMedia) {
         if (!(id in allMedia)) continue
         var media = allMedia[id]
         if (!mediaInAlbums[id]) {
           logLink_(media.baseUrl, media.filename + ' is not in an album')
           if (doCopy) {
-            copyMediaToGDrive(media.downloadUrl, folder, allMedia[id].filename)
+            const fileData = BackupList_.getValue(backupList, id)
+            if (!fileData) {
+              const fileId = copyMediaToGDrive(media.downloadUrl, folder, media.filename)
+              const fileData = {
+                name: media.filename,
+                fileId: fileId
+              }
+              BackupList_.setValue(backupList, id, fileData)
+              BackupList_.store(backupList)
+            }
           }
         }
       }
@@ -74,25 +84,21 @@ const Photos_ = (function(ns) {
       // -----------------
       
       function copyMediaToGDrive(url, folder, filename) {
-      
-        initPhotosManager_()
-      
         var response = UrlFetchApp.fetch(url, {
           headers: {
             Authorization: `Bearer ${Utils_.getAccessToken()}`
           }
         })
-        
+        let fileId = null
         if (isTooBig(response)) {      
           log_('Cannot download ' + filename + ' as it is too large.')
-          return false
+        } else {
+          var blob = response.getBlob()
+          blob.setName(filename)
+          fileId = folder.createFile(blob).getId()
+          log_('Downloaded "' + filename + '" to GDrive')
         }
-        
-        var blob = response.getBlob()
-        blob.setName(filename)
-        folder.createFile(blob)
-        log_('Downloaded "' + filename + '" to GDrive')
-        return true
+        return fileId
       }
     }
     
@@ -142,14 +148,6 @@ const Photos_ = (function(ns) {
       // Private Functions
       // -----------------
 
-      function getBackupFolder() {
-        var folder = root.getFoldersByName(SCRIPT_NAME).next()
-        if (folders.hasNext()) {
-          throw new Error('Multiple folder called "' + SCRIPT_NAME + '" in the root photos folder')
-        }
-        return folder
-      }
-  
       function processAlbums() {
 
         var albumFolder = getAlbumFolder()
@@ -351,6 +349,7 @@ const Photos_ = (function(ns) {
     // -----------------
 
     function continueDialog() {
+      return true // TODO
       if (!SpreadsheetApp.getActive()) return true
       if (CalledFromInstallableTrigger_) return true      
       var ui = SpreadsheetApp.getUi()
@@ -598,4 +597,19 @@ const Photos_ = (function(ns) {
     return albumTitles
   }
 
+  function getBackupFolder() {
+    let folder
+    const root = DriveApp.getFolderById(Settings_.rootFolder)
+    let folders = root.getFoldersByName(SCRIPT_NAME)
+    if (folders.hasNext()) {
+      folder = folders.next()
+      if (folders.hasNext()) {
+        throw new Error('Multiple folder called "' + SCRIPT_NAME + '" in the root photos folder')
+      }
+    } else {
+      folder = root.createFolder(SCRIPT_NAME)
+    }
+    return folder
+  }
+  
 })({})

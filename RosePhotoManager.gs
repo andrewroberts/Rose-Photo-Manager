@@ -42,7 +42,7 @@ var EVENT_HANDLERS_ = {
   listMediaNotInAnAlbum:     ['listMediaNotInAnAlbum()',     'Failed to list media not in albums',    listMediaNotInAnAlbum_],
   copyAlbums:                ['copyAlbums()',                'Failed to copy albums',                 copyAlbums_],
   copyMedia:                 ['copyMedia()',                 'Failed to copy media',                  copyMedia_],
-  copyAllMedia:              ['copyAllMedia_()',            'Failed to copy all media',               copyAllMedia_],
+  copyAllMedia:              ['copyAllMedia_()',             'Failed to copy all media',              copyAllMedia_],
   showSidebar:               ['showSidebar()',               'Failed to showSidebar',                 showSidebar_],
 }
 
