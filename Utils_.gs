@@ -44,9 +44,9 @@ const Utils_ = (function(ns) {
   
   ns.getAccessToken = function() {
     if (!AccessToken_) {
-      AccessToken_ = ScriptApp.getOAuthToken();
+      AccessToken_ = Service_.getAccessToken()
     }
-    return AccessToken_;
+    return AccessToken_
   };
 
   return ns
