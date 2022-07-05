@@ -17,6 +17,7 @@ let Log_ = null
 let Service_ = null
 let CalledFromInstallableTrigger_ = false
 let Settings_ = null
+let AccessToken_ = null
 
 // Public event handlers
 // ---------------------

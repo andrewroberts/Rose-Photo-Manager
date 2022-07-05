@@ -57,7 +57,7 @@ const Photos_ = (function(ns) {
       log_('Checking for media that is not in both lists')
       log_('Media in an album: ' + Object.keys(mediaInAlbums).length)
       log_('Media not in an album: ' + Object.keys(allMedia).length)
-      var folder = DriveApp.getFolderById(BACKUP_FOLDER_ID_)
+      var folder = DriveApp.getFolderById(Settings_.rootFolder)
       for (var id in allMedia) {
         if (!(id in allMedia)) continue
         var media = allMedia[id]
@@ -79,7 +79,7 @@ const Photos_ = (function(ns) {
       
         var response = UrlFetchApp.fetch(url, {
           headers: {
-            Authorization: 'Bearer ' + Service_.getAccessToken()
+            Authorization: `Bearer ${Utils_.getAccessToken()}`
           }
         })
         
@@ -207,7 +207,7 @@ const Photos_ = (function(ns) {
           
           var response = UrlFetchApp.fetch(item.downloadUrl, {
             headers: {
-              Authorization: 'Bearer ' + Service_.getAccessToken()
+              Authorization: `Bearer ${Utils_.getAccessToken()}`
             }
           })
           
@@ -284,7 +284,7 @@ const Photos_ = (function(ns) {
       
       var options = {
         headers: {
-          Authorization: 'Bearer ' + Service_.getAccessToken()
+          Authorization: `Bearer ${Utils_.getAccessToken()}`
         },
         'contentType' : 'application/json',
         muteHttpExceptions: true
@@ -399,7 +399,7 @@ const Photos_ = (function(ns) {
                 
           var options = {
             headers: {
-              Authorization: 'Bearer ' + Service_.getAccessToken()
+              Authorization: `Bearer ${Utils_.getAccessToken()}`
             },
             'method' : 'post',
             'contentType' : 'application/json',
@@ -488,7 +488,7 @@ const Photos_ = (function(ns) {
   function isTooBig(response) {
     var responseHeaders = response.getHeaders()
     var contentLength = responseHeaders['Content-Length']
-    return contentLength >= Settings_.maxFileSize
+    return contentLength >= MAX_FILE_SIZE_
   }
 
   function logLink_(url, message) {
@@ -552,7 +552,7 @@ const Photos_ = (function(ns) {
       
       var options = {
         headers: {
-          Authorization: 'Bearer ' + Service_.getAccessToken()
+          Authorization: `Bearer ${Utils_.getAccessToken()}`
         },
         'contentType' : 'application/json',
         muteHttpExceptions: true

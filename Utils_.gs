@@ -25,18 +25,30 @@ const Utils_ = (function(ns) {
   }
   
   ns.getSettings = function() {
+
     let settings = {}
-    SpreadsheetApp
+    
+    const row = SpreadsheetApp
       .getActive()
       .getSheetByName('Settings')
-      .getRange('B1:B2')
+      .getRange('B1:B4')
       .getValues()
-    settings.startDate = row[0][0]
-    settings.rootFolder = row[1][0]
-    settings.maxFileSize = row[2][0]
-    return settings
+    
+    return {
+      clientId     : row[0][0],
+      clientSecret : row[1][0],
+      startDate    : row[2][0],
+      rootFolder   : row[3][0]
+    }
   }
   
+  ns.getAccessToken = function() {
+    if (!AccessToken_) {
+      AccessToken_ = ScriptApp.getOAuthToken();
+    }
+    return AccessToken_;
+  };
+
   return ns
   
 })({}) 

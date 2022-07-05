@@ -5,8 +5,7 @@
 
 function getMediaService_() {
 
-  var clientId = PropertiesService.getScriptProperties().getProperty('CLIENT_ID_')
-  var clientSecret = PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET_')
+  const settings = Utils_.getSettings()
 
   // Create a new service with the given name. The name will be used when
   // persisting the authorized token, so ensure it is unique within the
@@ -18,8 +17,8 @@ function getMediaService_() {
       .setTokenUrl('https://accounts.google.com/o/oauth2/token')
 
       // Set the client ID and secret, from the Google Developers Console.
-      .setClientId(clientId)
-      .setClientSecret(clientSecret)
+      .setClientId(settings.clientId)
+      .setClientSecret(settings.clientSecret)
 
       // Set the name of the callback function in the script referenced
       // above that should be invoked to complete the OAuth flow.

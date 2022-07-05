@@ -36,29 +36,6 @@ var ADMIN_EMAIL_ADDRESS_ = ''
 // Tests
 // -----
 
-var TEST_FLAG_ = true
-
-var TEST_SHEET_ID_ = ''
-
-if (PRODUCTION_VERSION_) {
-  if (!TEST_FLAG_) {
-    throw new Error('Test Flag set in production')
-  }
-}
-
-// Constants/Enums
-// ===============
-
-var BACKUP_LIST_NAME_ = 'PhotosManager_BackupList'
-
-var BASE_URL_ = 'https://photoslibrary.googleapis.com/v1/'
-var MEDIA_URL_ = BASE_URL_ + 'mediaItems'
-var MEDIA_SEARCH_URL_ = BASE_URL_ + 'mediaItems:search'
-var ALBUMS_URL_ = BASE_URL_ + 'albums'
-
-// DEBUG & TESTING
-// ---------------
- 
 var TEST_GET_RAW_ALBUMS_ = true
 var TEST_CHECK_WITH_USER_ = true
 var TEST_GET_FOLDER_LIST_ = true
@@ -76,4 +53,32 @@ var TEST2_ALBUM_ = {
   productUrl: "https://photos.google.com/lr/album/ALtE6xxJxBCeQlVBgxqsirgHq8Mxs2hOGrU3STnc_mKQigCRN-4P3zDlmb6VuWiK1RSLGO75CwlD",
   mediaItemsCount: 2
 }
+
+var TEST_FLAG_ = true
+
+var TEST_SHEET_ID_ = ''
+
+if (PRODUCTION_VERSION_) {
+  if (!TEST_FLAG_) {
+    throw new Error('Test Flag set in production')
+  }
+}
+
+// Photos API
+// ----------
+
+var BASE_URL_ = 'https://photoslibrary.googleapis.com/v1/'
+var MEDIA_URL_ = BASE_URL_ + 'mediaItems'
+var MEDIA_SEARCH_URL_ = BASE_URL_ + 'mediaItems:search'
+var ALBUMS_URL_ = BASE_URL_ + 'albums'
+
+// Constants/Enums
+// ===============
+
+var BACKUP_LIST_NAME_ = 'PhotosManager_BackupList'
+
+const MAX_FILE_SIZE_ = 50000
+
+
+
 
