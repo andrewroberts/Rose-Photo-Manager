@@ -6,7 +6,7 @@
 (function() {"use strict"})()
 
 // BackupList_.gs
-// ===========
+// ==============
 //
 // Manage the ID list of media already backed up
 
@@ -28,20 +28,20 @@ var BackupList_ = (function(ns) {
     initPhotosManager_()  
     var backupList = PropertiesService
       .getUserProperties()
-      .getProperty('PhotosManager_BackupList')
+      .getProperty(BACKUP_LIST_NAME_)
     log_(backupList)
   } 
 
   ns.reset = function() {
     PropertiesService
       .getUserProperties()
-      .deleteProperty('PhotosManager_BackupList')
+      .deleteProperty(BACKUP_LIST_NAME_)
   } 
 
   ns.get = function() {
     var backupList = PropertiesService
       .getUserProperties()
-      .getProperty('PhotosManager_BackupList')
+      .getProperty(BACKUP_LIST_NAME_)
     if (backupList === null) {
       backupList = {}
     } else {
@@ -54,7 +54,7 @@ var BackupList_ = (function(ns) {
     PropertiesService
       .getUserProperties()
       .setProperty(
-        'PhotosManager_BackupList', 
+        BACKUP_LIST_NAME_, 
         JSON.stringify(backupList))
   }
 

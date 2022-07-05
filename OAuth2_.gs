@@ -46,8 +46,9 @@ function getMediaService_() {
       //.setParam('approval_prompt', 'force')
 }
 
-function showSidebar() {
+function showSidebar_() {
   var media = getMediaService_()
+  const ui = SpreadsheetApp.getUi()
   if (!media.hasAccess()) {
     var authorizationUrl = media.getAuthorizationUrl()
     var template = HtmlService.createTemplate(
@@ -55,9 +56,9 @@ function showSidebar() {
         'Close this after you have finished.')
     template.authorizationUrl = authorizationUrl
     var page = template.evaluate()
-    SpreadsheetApp.getUi().showSidebar(page)
+    ui.showSidebar(page)
   } else {
-  // ...
+    ui.alert('Script already authorised')
   }
 }
 
