@@ -106,7 +106,6 @@ function eventHandler_(config, args) {
   
 } // eventHandler_()
 
-
 function onOpen() {
   var ui = SpreadsheetApp.getUi()
   ui.createMenu('Photo Manager')

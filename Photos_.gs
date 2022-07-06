@@ -16,7 +16,7 @@
 
 function test_Photos() {
   test_init()
-  Photos_.processMedia(false)
+  Photos_.copyAlbums()
   debugger
 }
 
@@ -29,19 +29,17 @@ const Photos_ = (function(ns) {
   ns.processMedia = function(doCopy = true) {
 
     initPhotosManager_()
-    log_('START: Looking for media not in an album')
+    log_('START: Process media')
     
-    var mediaInAlbums = getMediaThatIsInAnAlbum()
+    let rawMediaInAlbums = Photos_.getMediaThatIsInAnAlbum()
+    if (!rawMediaInAlbums) return
+
+    let mediaInAlbums = rawMediaInAlbums.mediaInAlbums 
     if (!mediaInAlbums) return
-    mediaInAlbums = mediaInAlbums.mediaInAlbums  
-    
-    var mediaByAlbum = getMediaThatIsInAnAlbum(false) 
-    if (!mediaByAlbum) return
-    mediaByAlbum = mediaByAlbum.mediaByAlbum
-    
-    var allMedia = getAllMedia()
+
+    var allMedia = Photos_.getAllMedia()
     checkForDuplicates()
-    log_('END: Finished looking for media not in an album')
+    log_('END: Finished processing media')
     return
     
     // Private Functions
@@ -108,11 +106,11 @@ const Photos_ = (function(ns) {
 
     initPhotosManager_()
     log_('START: Copy album contents from ' + Settings_.startDate)
-    var albums = getMediaThatIsInAnAlbum()
+    var albums = Photos_.getMediaThatIsInAnAlbum()
     if (!albums) return
     albums = albums.mediaByAlbum
     copyAlbumMediaToGDrive(albums)
-    log_('END: Copied album contents from ' + Settings_.startDate)    
+    log_('END: Copied album contents from ' + Settings_.startDate) 
     return
     
     // Private Functions
@@ -138,7 +136,6 @@ const Photos_ = (function(ns) {
           continue
         }
         
-        var albumFolders = backupFolder.getFoldersByName(album.name)
         processAlbums()
       }
       
@@ -264,12 +261,7 @@ const Photos_ = (function(ns) {
     
   } // Photos_.copyAlbums()
 
-  return ns
-  
-  // Private Functions
-  // -----------------
-
-  function getAllMedia() {
+  ns.getAllMedia = function() {
 
     initPhotosManager_()
     log_('Getting a list of all the media, regardless of whether they are in an album')
@@ -330,16 +322,20 @@ const Photos_ = (function(ns) {
     
   } // getAllMedia
 
-  function getMediaThatIsInAnAlbum(checkWithUser) {
+  ns.getMediaThatIsInAnAlbum = function(checkWithUser) {
     
     if (checkWithUser === undefined && TEST_CHECK_WITH_USER_) checkWithUser = true
     initPhotosManager_()
+    const startDate = Settings_.startDate
+
     if (checkWithUser) {
       if (!continueDialog()) return null
     }
+
     var mediaInAlbums = {}
     var rawAlbums = getRawAlbumData_()  
     var albums = addMediaToAlbum()
+    
     return {
       mediaInAlbums: mediaInAlbums,
       mediaByAlbum: albums
@@ -418,7 +414,7 @@ const Photos_ = (function(ns) {
           
           if ('mediaItems' in json) {
             json.mediaItems.forEach(function(mediaItem) {
-              var data = getPhotoData(mediaItem)
+              var data = getPhotoData(mediaItem, startDate)
               if (!data) return
               mediaInThisAlbum.push(data)
               if (mediaInAlbums[data.id]) return
@@ -447,6 +443,11 @@ const Photos_ = (function(ns) {
     } // getMediaThatIsInAnAlbum.addMediaToAlbum()
 
   } // getMediaThatIsInAnAlbum()
+
+  return ns
+  
+  // Private Functions
+  // -----------------
 
   function getPhotoData(mediaItem, startDate) {
     

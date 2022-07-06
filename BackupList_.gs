@@ -11,14 +11,7 @@
 // Manage the ID list of media already backed up
 
 function test_BackupList() {
-  BackupList_.reset()
   BackupList_.dump()
-
-//  var backupList = BackupList_.get()
-//  BackupList_.setValue(backupList, 1, {a:1,b:2})
-//  BackupList_.store(backupList)
-//  var backupList1 = BackupList_.get()
-  
   debugger
 }
 
