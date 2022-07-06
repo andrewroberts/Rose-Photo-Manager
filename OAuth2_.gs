@@ -71,6 +71,15 @@ function authCallback(request) {
   }
 }
 
-function clearProps() {
-  PropertiesService.getUserProperties().deleteAllProperties()
+function clearProps_() {
+  const ui = SpreadsheetApp.getUi()
+  var response = ui.alert(
+    SCRIPT_NAME, 
+    'Please confirm you want to reset the script. This will mainly ' + 
+      'clear any record of any media that has already been uploaded to GDrive,' + 
+      'and require you to re-authorise the script.', 
+    ui.ButtonSet.YES_NO)
+  if (response === ui.Button.YES) {
+    PropertiesService.getUserProperties().deleteAllProperties()
+  }
 }
