@@ -2,13 +2,13 @@
   "timeZone": "Europe/London",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "Assert",
-      "libraryId": "1R-rxUHuQU0ez95FlZz9fxqifbYFszHnukqzv_3Uk5zM3eG4eRBrh_E1M",
-      "version": "27"
-    }, {
       "userSymbol": "OAuth2",
       "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
       "version": "41"
+    }, {
+      "userSymbol": "Assert",
+      "libraryId": "1R-rxUHuQU0ez95FlZz9fxqifbYFszHnukqzv_3Uk5zM3eG4eRBrh_E1M",
+      "version": "27"
     }]
   },
   "exceptionLogging": "STACKDRIVER",
