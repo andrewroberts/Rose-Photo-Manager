@@ -44,6 +44,7 @@ var EVENT_HANDLERS_ = {
   copyMedia:                 ['copyMedia()',                 'Failed to copy media',                  copyMedia_],
   copyAllMedia:              ['copyAllMedia_()',             'Failed to copy all media',              copyAllMedia_],
   showSidebar:               ['showSidebar()',               'Failed to showSidebar',                 showSidebar_],
+  clearProps:                ['clearProps()',                'Failed to clear props',                 clearProps_],
 }
 
 function listMediaNotInAnAlbum(args) {return eventHandler_(EVENT_HANDLERS_.listMediaNotInAnAlbum, args)}
@@ -51,6 +52,7 @@ function copyAlbums(args) {return eventHandler_(EVENT_HANDLERS_.copyAlbums, args
 function copyMedia(args) {return eventHandler_(EVENT_HANDLERS_.copyMedia, args)}
 function copyAllMedia(args) {return eventHandler_(EVENT_HANDLERS_.copyAllMedia, args)}
 function showSidebar(args) {return eventHandler_(EVENT_HANDLERS_.showSidebar, args)}
+function clearProps(args) {return eventHandler_(EVENT_HANDLERS_.clearProps, args)}
 
 // Private Functions
 // =================
