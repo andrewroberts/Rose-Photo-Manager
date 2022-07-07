@@ -29,7 +29,7 @@ const Photos_ = (function(ns) {
   ns.processMedia = function(doCopy = true) {
 
     initPhotosManager_()
-    log_('START: Process media')
+    log_('START: Process media files not in an album')
     
     let rawMediaInAlbums = Photos_.getMediaThatIsInAnAlbum()
     if (!rawMediaInAlbums) return
@@ -39,7 +39,7 @@ const Photos_ = (function(ns) {
 
     var allMedia = Photos_.getAllMedia()
     checkForDuplicates()
-    log_('END: Finished processing media')
+    log_('END: Finished Process media files not in an album')
     return
     
     // Private Functions
@@ -104,7 +104,7 @@ const Photos_ = (function(ns) {
   
   ns.copyAlbums = function() {
 
-    initPhotosManager_()
+    initPhotosManager_()  
     log_('START: Copy album contents from ' + Settings_.startDate)
     var albums = Photos_.getMediaThatIsInAnAlbum()
     if (!albums) return
@@ -240,7 +240,8 @@ const Photos_ = (function(ns) {
           if (folderId) {
             albumFolder = DriveApp.getFolderById(folderId)
           } else {
-            albumFolder = backupFolder.createFolder(album.name)      
+            albumFolder = backupFolder.createFolder(album.name)
+            log_('Created "' + album.name + '"')
           }
         
           return albumFolder
@@ -502,7 +503,11 @@ const Photos_ = (function(ns) {
   function initPhotosManager_() {
     if (!Service_)  Service_  = getMediaService_()
     if (!Log_)      Log_      = Utils_.getLogSheet()
-    if (!Settings_) Settings_ = Utils_.getSettings()  
+    if (!Settings_) {
+      Settings_ = Utils_.getSettings()
+      if (!Settings_.rootFolder) throw new Error('Please enter the root folder ID to the Settings tab')
+      if (!Settings_.startDate) throw new Error('Please enter the date from which you would like to upload media in the Settings tab')
+    }
   }
 
   function getFolderList_(source, list) {
