@@ -22,7 +22,7 @@
 // =============
 
 var SCRIPT_NAME = "Rose Photo Manager"
-var SCRIPT_VERSION = "v1.0"
+var SCRIPT_VERSION = "v1.0.1"
 
 var PRODUCTION_VERSION_ = false
 
