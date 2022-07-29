@@ -119,7 +119,7 @@ function onOpen() {
     .addItem('List media not in an Album', 'listMediaNotInAnAlbum')  
     .addSeparator()
     .addItem('Authorize if needed (does nothing if already authorized)', 'showSidebar')      
-    .addItem('Reset Settings', 'clearProps')
+//    .addItem('Reset Settings', 'clearProps')
     .addToUi()
 }
 
