@@ -11,7 +11,7 @@
 // Manage the ID list of media already backed up
 
 function test_BackupList() {
-  BackupList_.dump()
+  BackupList_.removeKeyUsingName('20220801_112518.mp4')
   debugger
 }
 
@@ -57,6 +57,28 @@ var BackupList_ = (function(ns) {
   ns.setValue = function(backupList, key, value) {
 //    log_('value: ' + JSON.stringify(value))
     backupList[key] = value
+  }
+
+  ns.removeKey = function(backupList, key) {
+    delete backupList[key]
+  }
+
+  ns.findKeyFromName = function(backupList, name) {
+    let key = null
+    for (let nextKey in backupList) {
+      if (!backupList.hasOwnProperty(key)) continue
+      if (backupList[key].name === name) {
+        key = nextKey
+      }
+    }
+    return key
+  }
+
+  ns.removeKeyUsingName = function(name) {
+    let list = BackupList_.get()
+    const key = BackupList_.findKeyFromName(list, name)
+    BackupList_.removeKey(list, key)
+    BackupList_.store(list)
   }
 
   return ns
