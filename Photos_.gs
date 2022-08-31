@@ -164,7 +164,11 @@ const Photos_ = (function(ns) {
               return
             } else {          
               if (!alreadyCreatedShortcut()) {
-                albumFolder.createShortcut(fileData.fileId)
+                if (!fileData.fileId) {
+                  log_('WARNING! No file ID for "' + fileData.name + '" when trying to create shortcut')
+                } else {
+                  albumFolder.createShortcut(fileData.fileId)
+                }
               }
             }
           }
