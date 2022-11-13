@@ -127,5 +127,5 @@ function listMediaNotInAnAlbum_() {Photos_.processMedia(false)}
 function copyMedia_()             {Photos_.processMedia(true)}
 function copyAlbums_()            {Photos_.copyAlbums()}
 function copyAllMedia_()          {copyMedia_(); copyAlbums_()}
-// function showSidebar_() {} // TODO - In OAuth2_
-// function clearProps_() {} // TODO - In OAuth2_
+// function showSidebar_() {} // TODO - Defined in OAuth2_.gs
+// function clearProps_() {} // TODO - Defined in OAuth2_.gs

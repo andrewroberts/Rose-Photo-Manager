@@ -167,7 +167,15 @@ const Photos_ = (function(ns) {
                 if (!fileData.fileId) {
                   log_('WARNING! No file ID for "' + fileData.name + '" when trying to create shortcut')
                 } else {
-                  albumFolder.createShortcut(fileData.fileId)
+                  // The file data is stored, but check that it still exists 
+                  // before trying to create the shortcut
+                  try {
+                    DriveApp.getFileById(fileData.fileId)
+                    albumFolder.createShortcut(fileData.fileId)
+                  } catch (error) {
+                    BackupList_.removeKeyUsingName(fileData.name)
+                    log_(`WARNING: "${fileData.name} data was stored, but it had been deleted. It has now been removed from storage.`)
+                  }
                 }
               }
             }
